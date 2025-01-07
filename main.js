@@ -7,7 +7,7 @@ const options =
 {
     startAfter: 0,
     dimension: 0,
-
+    includeMisplaced: true,
 }
 
 async function search(){
@@ -23,7 +23,7 @@ async function search(){
     {
         
         
-        let mistypedInstance = Mistyped(sentenceSplit[wordSelection]);//right now I will have mistyped word 0 "what" with mistake 0 "wgat",same with each following word
+        let mistypedInstance = Mistyped(sentenceSplit[wordSelection],options);//right now I will have mistyped word 0 "what" with mistake 0 "wgat",same with each following word
         
         if(wordSelection<sentenceSplit.length)
             mistypedInstance[wordSelection] = mistypedInstance[wordSelection]+' ';
