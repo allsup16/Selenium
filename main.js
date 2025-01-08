@@ -16,37 +16,35 @@ let pageDelay=[5,20];
 
 
 async function search(typingAccuracy,sentence,typingSpeed,pageDelay){
-    let driver;
     try
-        {
-        driver = await new Builder().forBrowser("MicrosoftEdge").build();
-        await driver.get("https://www.google.com");
+    {
+        let driver = await new Builder().forBrowser("MicrosoftEdge").build();
+        driver.get("https://www.google.com");
 
         let sentenceSplit = sentence.split(" ");
         isCorrect = [sentenceSplit.length*true];
-    for (let wordSelection = 0; wordSelection<sentenceSplit.length;wordSelection++)
-    {
-        let typedWord;
-        let mistypedInstance = Mistyped(sentenceSplit[wordSelection],options);
-        if(wordSelection<sentenceSplit.length-1)
-        {typedWord = await chosenWord(mistypedInstance,sentenceSplit[wordSelection],typingAccuracy)+' ';}
-        else
-        {typedWord = await chosenWord(mistypedInstance,sentenceSplit[wordSelection],typingAccuracy);}
-        
-        for(let charSelection =0; charSelection<typedWord.length;charSelection++)
+
+        for (let wordSelection = 0; wordSelection<sentenceSplit.length;wordSelection++)
         {
-            try{
-                await driver.findElement(By.name("q")).sendKeys(typedWord.charAt(charSelection));
-            }
-            catch(e){
-                console.error("Error during typing: ", e.message);
-            }
+            let typedWord;
+            let mistypedInstance = Mistyped(sentenceSplit[wordSelection],options);
+            if(wordSelection<sentenceSplit.length-1)
+            {typedWord = chosenWord(mistypedInstance,sentenceSplit[wordSelection],typingAccuracy)+' ';}
+            else
+            {typedWord = chosenWord(mistypedInstance,sentenceSplit[wordSelection],typingAccuracy);}
+        
+            for(let charSelection =0; charSelection<typedWord.length;charSelection++)
+            {
+                try
+                    {await driver.findElement(By.name("q")).sendKeys(typedWord.charAt(charSelection));}
+                catch(e)
+                    {console.error("Error during typing: ", e.message);}
             await sleep(typingSpeed[0],typingSpeed[1]);
+            }
         }
-    }
-    await driver.findElement(By.name("q")).sendKeys(Key.ENTER);
-    await sleep(pageDelay[0],pageDelay[1]);
-} 
+        await driver.findElement(By.name("q")).sendKeys(Key.ENTER);
+        await sleep(pageDelay[0],pageDelay[1]);
+    } 
     catch(e)
         {console.error("Driver Iniziatization Failed",e.message);}
     finally 
@@ -70,8 +68,7 @@ async function sleep(min,max) {
 }
 
 //Randomly gets a number between 0 and 99, then if number is available will use the incorrect choice or the correct choice if none is. 
-async function chosenWord(incorrectChoices,originalWord,chanceOfSuccess)
-{
+function chosenWord(incorrectChoices,originalWord,chanceOfSuccess){
     let randomError = math.random();
 
     if(randomError>chanceOfSuccess)//determines if an error occured
@@ -82,11 +79,9 @@ async function chosenWord(incorrectChoices,originalWord,chanceOfSuccess)
     else
         {return originalWord;}
 }
-/*take the total number of choices and returns */ 
+
 function randomNumberPortions(total)
-{
-    return total === 0?0:math.floor(math.random()*total);
-}
+    {return total === 0?0:math.floor(math.random()*total);}
 
 
 search(typingAccuracy,sentence,typingSpeed,pageDelay);
