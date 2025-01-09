@@ -10,16 +10,17 @@ const options =
     includeMisplaced: true,
 }
 let typingAccuracy = .75;
-let sentence = "what are online cookies?";
+let sentence = "This is a sentence.";
 let typingSpeed=[.2,.4];
 let pageDelay=[5,20];
 
 
 async function search(typingAccuracy,sentence,typingSpeed,pageDelay){
+    let driver;
     try
     {
-        let driver = await new Builder().forBrowser("MicrosoftEdge").build();
-        driver.get("https://www.google.com");
+        driver = await new Builder().forBrowser("MicrosoftEdge").build();
+        await driver.get("https://www.google.com");
 
         let sentenceSplit = sentence.split(" ");
         isCorrect = [sentenceSplit.length*true];
@@ -32,7 +33,7 @@ async function search(typingAccuracy,sentence,typingSpeed,pageDelay){
             {typedWord = chosenWord(mistypedInstance,sentenceSplit[wordSelection],typingAccuracy)+' ';}
             else
             {typedWord = chosenWord(mistypedInstance,sentenceSplit[wordSelection],typingAccuracy);}
-        
+            console.log(IncorrectWord(typedWord,sentenceSplit[wordSelection]));
             for(let charSelection =0; charSelection<typedWord.length;charSelection++)
             {
                 try
@@ -82,6 +83,9 @@ function chosenWord(incorrectChoices,originalWord,chanceOfSuccess){
 
 function randomNumberPortions(total)
     {return total === 0?0:math.floor(math.random()*total);}
+
+function IncorrectWord(typedWord,actualWord)
+{return typedWord===actualWord?true:false;}
 
 
 search(typingAccuracy,sentence,typingSpeed,pageDelay);
