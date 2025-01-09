@@ -9,8 +9,8 @@ const options =
     dimension: 2,
     includeMisplaced: true,
 }
-let typingAccuracy = .75;
-let sentence = "what are online cookies?";
+let typingAccuracy = .9;
+let sentence = "I am lost";
 let typingSpeed=[.2,.4];
 let pageDelay=[5,20];
 
@@ -23,7 +23,6 @@ async function search(typingAccuracy,sentence,typingSpeed,pageDelay){
         await driver.get("https://www.google.com");
 
         let sentenceSplit = sentence.split(" ");
-        isCorrect = [sentenceSplit.length*true];
     for (let wordSelection = 0; wordSelection<sentenceSplit.length;wordSelection++)
     {
         let typedWord;
