@@ -163,14 +163,9 @@ async function main()
                     await search(typingAccuracy,sentences[randomNumberPortions(sentences.length)],typingSpeed,pageDelay,searchEngine);
                     await sleep(3000,12000,false);
                 }
-
-
         }).catch(err =>{
             console.error("Error reading file: ",err.message);
         });
-    
-    
-
 }
 
 main();
