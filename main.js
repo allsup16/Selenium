@@ -16,7 +16,7 @@ const options =
     dimension: 2,
 }
 //local location of json file
-const filepath = 'C:\\Users\\bryan\\Desktop\\Projects\\Selenium_Project\\Sentences.json';
+const filepath = 'Sentences.json';
 let typingAccuracy = .95;
 let typingSpeed=[.2,.3];
 let pageDelay=[10,20];
